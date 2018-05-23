@@ -1,0 +1,19 @@
+{
+  "name": "game-to-fame",
+  "version": "1.0.0",
+  "description": "Boilerplate for creating HTML5 multiplayer games with NodeJS",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/charleslorenzo/game-to-fame.git"
+  },
+  "author": "Charles Lorenzo",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/charleslorenzo/game-to-fame/issues"
+  },
+  "homepage": "https://github.com/charleslorenzo/game-to-fame#readme"
+}
