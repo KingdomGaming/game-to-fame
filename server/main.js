@@ -10,12 +10,16 @@ const server = http.Server(app);
 const io = socketIo(server);
 const port = 3000;
 
+const publicDirectory = path.resolve("public");
+const serverDirectory = path.resolve("server");
+const sharedDirectory = path.resolve("shared");
+
 app.set("port", port);
-app.use("/public", express.static(__dirname + "/public"));
+app.use(express.static(publicDirectory));
 
 // Routes
 app.get("/", (request, response) => {
-    response.sendFile(path.join(__dirname, "index.html"));
+    response.sendFile(path.join(publicDirectory, "index.html"));
 });
 
 // Start Server
