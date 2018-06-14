@@ -5,3 +5,10 @@ export const ENV = {
 export const PLUGINS = {
 
 }
+
+export const FILENAMES = {
+    js: {
+        entry: "main.js",
+        output: "app.js"
+    }
+}

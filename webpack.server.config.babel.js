@@ -2,12 +2,8 @@ import path from "path";
 import webpack from "webpack";
 import NodemonPlugin from "nodemon-webpack-plugin";
 
-import { ENV, PLUGINS } from "./webpack.shared.babel";
+import { ENV, PLUGINS, FILENAMES } from "./webpack.shared.babel";
 import { PATHS } from "./shared/main";
-
-// Enforce consistent entry point/output filenames
-const ENTRY_JS_FILENAME = "main.js";
-const OUTPUT_JS_FILENAME = "app.js";
 
 let serverPlugins = [
     ...PLUGINS
@@ -16,19 +12,19 @@ let serverPlugins = [
 if (!ENV.isProduction) {
     serverPlugins.push(new NodemonPlugin({
         watch: PATHS.serverDist,
-        script: path.resolve(PATHS.serverDist, OUTPUT_JS_FILENAME)
+        script: path.resolve(PATHS.serverDist, FILENAMES.js.output)
     }));
 }
 
 
 export default {
-    entry: path.join(PATHS.serverSource, ENTRY_JS_FILENAME),
+    entry: path.join(PATHS.serverSource, FILENAMES.js.entry),
     target: "node",
     mode: ENV.isProduction ? "production" : "development",
     devtool: ENV.isProduction ? null : "source-map",
     output: {
         path: PATHS.serverDist,
-        filename: OUTPUT_JS_FILENAME,
+        filename: FILENAMES.js.output,
         libraryTarget: "commonjs",
         publicPath: "/"
     },
