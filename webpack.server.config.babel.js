@@ -9,6 +9,17 @@ import { PATHS } from "./shared/main";
 const ENTRY_JS_FILENAME = "main.js";
 const OUTPUT_JS_FILENAME = "app.js";
 
+let serverPlugins = [
+    ...PLUGINS
+];
+
+if (!ENV.isProduction) {
+    serverPlugins.push(new NodemonPlugin({
+        watch: PATHS.serverDist,
+        script: path.resolve(PATHS.serverDist, OUTPUT_JS_FILENAME)
+    }));
+}
+
 
 export default {
     entry: path.join(PATHS.serverSource, ENTRY_JS_FILENAME),
@@ -28,12 +39,7 @@ export default {
     externals: [
         /^(?!\.|\/|[A-Z]\:).+/i, // Assume anything not relatively/absolutely pathed is external
     ],
-    plugins: [
-        new NodemonPlugin({
-            watch: PATHS.serverDist,
-            script: path.resolve(PATHS.serverDist, OUTPUT_JS_FILENAME)
-        })
-    ],
+    plugins: serverPlugins,
     module: {
         rules: [
             {
