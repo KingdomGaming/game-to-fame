@@ -2,7 +2,8 @@ import path from "path";
 import webpack from "webpack";
 import NodemonPlugin from "nodemon-webpack-plugin";
 
-import { PATHS, PLUGINS } from "./config/webpack/shared";
+import { ENV, PLUGINS } from "./webpack.shared.babel";
+import { PATHS } from "./shared/main";
 
 // Enforce consistent entry point/output filenames
 const ENTRY_JS_FILENAME = "main.js";
@@ -12,8 +13,8 @@ const OUTPUT_JS_FILENAME = "app.js";
 export default {
     entry: path.join(PATHS.serverSource, ENTRY_JS_FILENAME),
     target: "node",
-    mode: "development",
-    devtool: "source-map",
+    mode: ENV.isProduction ? "production" : "development",
+    devtool: ENV.isProduction ? null : "source-map",
     output: {
         path: PATHS.serverDist,
         filename: OUTPUT_JS_FILENAME,
@@ -25,7 +26,7 @@ export default {
         __filename: false
     },
     externals: [
-        /^(?!\.|\/|C\:).+/i, // TODO: figure out a way to not have to hack including the C: drive in the regex
+        /^(?!\.|\/|[A-Z]\:).+/i, // Assume anything not relatively/absolutely pathed is external
     ],
     plugins: [
         new NodemonPlugin({

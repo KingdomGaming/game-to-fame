@@ -4,6 +4,8 @@ import express from "express";
 import http from "http";
 import socketIo from "socket.io";
 
+import * as Shared from "../../shared/main";
+
 // Setup
 const app = express();
 const server = http.Server(app);
@@ -25,5 +27,4 @@ app.get("/", (request, response) => {
 // Start Server
 server.listen(port, () => {
     console.log(`server listening on port ${port}`);
-    console.log("hi");
 });
