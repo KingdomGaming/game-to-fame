@@ -1,8 +1,8 @@
 // Require Dependencies
-const path = require("path");
-const express = require("express");
-const http = require("http");
-const socketIo = require("socket.io");
+import path from "path";
+import express from "express";
+import http from "http";
+import socketIo from "socket.io";
 
 // Setup
 const app = express();

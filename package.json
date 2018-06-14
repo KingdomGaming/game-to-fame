@@ -4,6 +4,7 @@
   "description": "Boilerplate for creating HTML5 multiplayer games with NodeJS",
   "main": "index.js",
   "scripts": {
+    "build:server": "webpack --config config/webpack/webpack.server.config.babel.js",
     "serve": "nodemon server/main.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -27,7 +28,12 @@
     "babel-core": "^6.26.3",
     "babel-eslint": "^8.2.3",
     "babel-loader": "^7.1.4",
+    "babel-plugin-transform-async-to-generator": "^6.24.1",
+    "babel-plugin-transform-class-properties": "^6.24.1",
+    "babel-plugin-transform-exponentiation-operator": "^6.24.1",
+    "babel-plugin-transform-object-rest-spread": "^6.26.0",
     "babel-preset-env": "^1.7.0",
+    "babel-register": "^6.26.0",
     "eslint": "^4.19.1",
     "nodemon": "^1.17.5",
     "webpack": "^4.8.3",
