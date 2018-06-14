@@ -1,1 +1,189 @@
-!function(e){var t={};function n(r){if(t[r])return t[r].exports;var o=t[r]={i:r,l:!1,exports:{}};return e[r].call(o.exports,o,o.exports,n),o.l=!0,o.exports}n.m=e,n.c=t,n.d=function(e,t,r){n.o(e,t)||Object.defineProperty(e,t,{enumerable:!0,get:r})},n.r=function(e){"undefined"!=typeof Symbol&&Symbol.toStringTag&&Object.defineProperty(e,Symbol.toStringTag,{value:"Module"}),Object.defineProperty(e,"__esModule",{value:!0})},n.t=function(e,t){if(1&t&&(e=n(e)),8&t)return e;if(4&t&&"object"==typeof e&&e&&e.__esModule)return e;var r=Object.create(null);if(n.r(r),Object.defineProperty(r,"default",{enumerable:!0,value:e}),2&t&&"string"!=typeof e)for(var o in e)n.d(r,o,function(t){return e[t]}.bind(null,o));return r},n.n=function(e){var t=e&&e.__esModule?function(){return e.default}:function(){return e};return n.d(t,"a",t),t},n.o=function(e,t){return Object.prototype.hasOwnProperty.call(e,t)},n.p="",n(n.s=4)}([function(e,t){e.exports=socket.io},function(e,t){e.exports=http},function(e,t){e.exports=express},function(e,t){e.exports=path},function(e,t,n){"use strict";var r=i(n(3)),o=i(n(2)),u=i(n(1)),l=i(n(0));function i(e){return e&&e.__esModule?e:{default:e}}var f=(0,o.default)(),c=u.default.Server(f),s=((0,l.default)(c),r.default.resolve("public"));r.default.resolve("server"),r.default.resolve("shared");f.set("port",3e3),f.use(o.default.static(s)),f.get("/",function(e,t){t.sendFile(r.default.join(s,"index.html"))}),c.listen(3e3,function(){console.log("server listening on port 3000")})}]);
+(function(e, a) { for(var i in a) e[i] = a[i]; }(exports, /******/ (function(modules) { // webpackBootstrap
+/******/ 	// The module cache
+/******/ 	var installedModules = {};
+/******/
+/******/ 	// The require function
+/******/ 	function __webpack_require__(moduleId) {
+/******/
+/******/ 		// Check if module is in cache
+/******/ 		if(installedModules[moduleId]) {
+/******/ 			return installedModules[moduleId].exports;
+/******/ 		}
+/******/ 		// Create a new module (and put it into the cache)
+/******/ 		var module = installedModules[moduleId] = {
+/******/ 			i: moduleId,
+/******/ 			l: false,
+/******/ 			exports: {}
+/******/ 		};
+/******/
+/******/ 		// Execute the module function
+/******/ 		modules[moduleId].call(module.exports, module, module.exports, __webpack_require__);
+/******/
+/******/ 		// Flag the module as loaded
+/******/ 		module.l = true;
+/******/
+/******/ 		// Return the exports of the module
+/******/ 		return module.exports;
+/******/ 	}
+/******/
+/******/
+/******/ 	// expose the modules object (__webpack_modules__)
+/******/ 	__webpack_require__.m = modules;
+/******/
+/******/ 	// expose the module cache
+/******/ 	__webpack_require__.c = installedModules;
+/******/
+/******/ 	// define getter function for harmony exports
+/******/ 	__webpack_require__.d = function(exports, name, getter) {
+/******/ 		if(!__webpack_require__.o(exports, name)) {
+/******/ 			Object.defineProperty(exports, name, { enumerable: true, get: getter });
+/******/ 		}
+/******/ 	};
+/******/
+/******/ 	// define __esModule on exports
+/******/ 	__webpack_require__.r = function(exports) {
+/******/ 		if(typeof Symbol !== 'undefined' && Symbol.toStringTag) {
+/******/ 			Object.defineProperty(exports, Symbol.toStringTag, { value: 'Module' });
+/******/ 		}
+/******/ 		Object.defineProperty(exports, '__esModule', { value: true });
+/******/ 	};
+/******/
+/******/ 	// create a fake namespace object
+/******/ 	// mode & 1: value is a module id, require it
+/******/ 	// mode & 2: merge all properties of value into the ns
+/******/ 	// mode & 4: return value when already ns object
+/******/ 	// mode & 8|1: behave like require
+/******/ 	__webpack_require__.t = function(value, mode) {
+/******/ 		if(mode & 1) value = __webpack_require__(value);
+/******/ 		if(mode & 8) return value;
+/******/ 		if((mode & 4) && typeof value === 'object' && value && value.__esModule) return value;
+/******/ 		var ns = Object.create(null);
+/******/ 		__webpack_require__.r(ns);
+/******/ 		Object.defineProperty(ns, 'default', { enumerable: true, value: value });
+/******/ 		if(mode & 2 && typeof value != 'string') for(var key in value) __webpack_require__.d(ns, key, function(key) { return value[key]; }.bind(null, key));
+/******/ 		return ns;
+/******/ 	};
+/******/
+/******/ 	// getDefaultExport function for compatibility with non-harmony modules
+/******/ 	__webpack_require__.n = function(module) {
+/******/ 		var getter = module && module.__esModule ?
+/******/ 			function getDefault() { return module['default']; } :
+/******/ 			function getModuleExports() { return module; };
+/******/ 		__webpack_require__.d(getter, 'a', getter);
+/******/ 		return getter;
+/******/ 	};
+/******/
+/******/ 	// Object.prototype.hasOwnProperty.call
+/******/ 	__webpack_require__.o = function(object, property) { return Object.prototype.hasOwnProperty.call(object, property); };
+/******/
+/******/ 	// __webpack_public_path__
+/******/ 	__webpack_require__.p = "/";
+/******/
+/******/
+/******/ 	// Load entry module and return exports
+/******/ 	return __webpack_require__(__webpack_require__.s = "./server/src/main.js");
+/******/ })
+/************************************************************************/
+/******/ ({
+
+/***/ "./server/src/main.js":
+/*!****************************!*\
+  !*** ./server/src/main.js ***!
+  \****************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var _path = __webpack_require__(/*! path */ "path");
+
+var _path2 = _interopRequireDefault(_path);
+
+var _express = __webpack_require__(/*! express */ "express");
+
+var _express2 = _interopRequireDefault(_express);
+
+var _http = __webpack_require__(/*! http */ "http");
+
+var _http2 = _interopRequireDefault(_http);
+
+var _socket = __webpack_require__(/*! socket.io */ "socket.io");
+
+var _socket2 = _interopRequireDefault(_socket);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+// Setup
+// Require Dependencies
+var app = (0, _express2.default)();
+var server = _http2.default.Server(app);
+var io = (0, _socket2.default)(server);
+var port = 3000;
+
+var publicDirectory = _path2.default.resolve("public");
+var serverDirectory = _path2.default.resolve("server");
+var sharedDirectory = _path2.default.resolve("shared");
+
+app.set("port", port);
+app.use(_express2.default.static(publicDirectory));
+
+// Routes
+app.get("/", function (request, response) {
+    response.sendFile(_path2.default.join(publicDirectory, "index.html"));
+});
+
+// Start Server
+server.listen(port, function () {
+    console.log("server listening on port " + port);
+    console.log("hi");
+});
+
+/***/ }),
+
+/***/ "express":
+/*!**************************!*\
+  !*** external "express" ***!
+  \**************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = require("express");
+
+/***/ }),
+
+/***/ "http":
+/*!***********************!*\
+  !*** external "http" ***!
+  \***********************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = require("http");
+
+/***/ }),
+
+/***/ "path":
+/*!***********************!*\
+  !*** external "path" ***!
+  \***********************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = require("path");
+
+/***/ }),
+
+/***/ "socket.io":
+/*!****************************!*\
+  !*** external "socket.io" ***!
+  \****************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = require("socket.io");
+
+/***/ })
+
+/******/ })));
+//# sourceMappingURL=app.js.map

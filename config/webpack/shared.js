@@ -1,22 +1,16 @@
 import path from "path";
 
-const PATHS = {
+export const PATHS = {
     clientRoot: path.resolve("client"),
     serverRoot: path.resolve("server"),
     sharedRoot: path.resolve("shared"),
     publicRoot: path.resolve("public"),
-    serverSource: path.join("server", "src"),
-    serverDist: path.join("server", "dist"),
-    clientSource: path.join("client"),
-    clientDist: path.join("public", "js")
+    serverSource: path.resolve("server", "src"),
+    serverDist: path.resolve("server", "dist"),
+    clientSource: path.resolve("client"),
+    clientDist: path.resolve("public", "js")
 }
 
-const PLUGINS = {
+export const PLUGINS = {
 
-}
-
-
-export {
-    PATHS,
-    PLUGINS
 }

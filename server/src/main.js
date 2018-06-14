@@ -25,4 +25,5 @@ app.get("/", (request, response) => {
 // Start Server
 server.listen(port, () => {
     console.log(`server listening on port ${port}`);
+    console.log("hi");
 });
