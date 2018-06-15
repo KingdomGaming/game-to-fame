@@ -5,14 +5,12 @@ import NodemonPlugin from "nodemon-webpack-plugin";
 import { ENV, PLUGINS, FILENAMES } from "./webpack.shared.babel";
 import { PATHS } from "./shared/main";
 
-let serverPlugins = [
-    ...PLUGINS
-];
+let serverPlugins = PLUGINS;
 
 if (!ENV.isProduction) {
     serverPlugins.push(new NodemonPlugin({
         watch: PATHS.serverDist,
-        script: path.resolve(PATHS.serverDist, FILENAMES.js.output)
+        script: path.resolve(PATHS.serverDist, `${FILENAMES.js.output}.bundle.js`)
     }));
 }
 
@@ -24,7 +22,7 @@ export default {
     devtool: ENV.isProduction ? null : "source-map",
     output: {
         path: PATHS.serverDist,
-        filename: FILENAMES.js.output,
+        filename: `${FILENAMES.js.output}.bundle.js`,
         libraryTarget: "commonjs",
         publicPath: "/"
     },
