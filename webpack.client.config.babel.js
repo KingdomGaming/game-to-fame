@@ -15,12 +15,8 @@ export default {
     output: {
 		path: PATHS.clientDist,
         filename: `${FILENAMES.js.output}.bundle.js`,
-        //libraryTarget: "commonjs",
         publicPath: "/"
     },
-    externals: [
-        /^(?!\.|\/|[A-Z]\:).+/i, // Assume anything not relatively/absolutely pathed is external
-    ],
     plugins: clientPlugins,
     module: {
         rules: [
