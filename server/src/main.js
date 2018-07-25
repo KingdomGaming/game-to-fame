@@ -4,7 +4,8 @@ import express from "express";
 import http from "http";
 import socketIo from "socket.io";
 
-import * as Shared from "../../shared/main";
+import { PATHS } from "../../shared/main";
+import Router from "./router/Router";
 
 // Setup
 const app = express();
@@ -12,17 +13,10 @@ const server = http.Server(app);
 const io = socketIo(server);
 const port = 3000;
 
-const publicDirectory = path.resolve("public");
-const serverDirectory = path.resolve("server");
-const sharedDirectory = path.resolve("shared");
-
 app.set("port", port);
-app.use(express.static(publicDirectory));
+app.use(express.static(PATHS.publicRoot));
 
-// Routes
-app.get("/", (request, response) => {
-    response.sendFile(path.join(publicDirectory, "index.html"));
-});
+new Router(app);
 
 // Start Server
 server.listen(port, () => {
