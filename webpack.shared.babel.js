@@ -6,6 +6,10 @@ export const FILENAMES = {
     js: {
         entry: "main",
         output: "app"
+    },
+    styles: {
+        entry: "main",
+        output: "app"
     }
 }
 

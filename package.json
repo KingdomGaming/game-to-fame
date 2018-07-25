@@ -4,10 +4,11 @@
   "description": "Boilerplate for creating HTML5 multiplayer games with NodeJS",
   "main": "index.js",
   "scripts": {
+    "build": "npm run build:server && npm run build:client",
     "build:client": "webpack --config ./webpack.client.config.babel.js",
     "build:server": "webpack --config ./webpack.server.config.babel.js",
     "dev": "concurrently \"npm run build:client -- --watch\" \"npm run build:server -- --watch\"",
-    "serve": "npm run build:server -- --watch",
+    "serve": "node ./server/dist/app.bundle.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -25,6 +26,7 @@
     "socket.io": "^2.1.1"
   },
   "devDependencies": {
+    "autoprefixer": "^9.0.1",
     "babel": "^6.23.0",
     "babel-cli": "^6.26.0",
     "babel-core": "^6.26.3",
@@ -37,8 +39,14 @@
     "babel-preset-env": "^1.7.0",
     "babel-register": "^6.26.0",
     "concurrently": "^3.6.0",
+    "css-loader": "^1.0.0",
     "eslint": "^4.19.1",
+    "mini-css-extract-plugin": "^0.4.1",
+    "node-sass": "^4.9.2",
     "nodemon-webpack-plugin": "^4.0.3",
+    "postcss-loader": "^2.1.6",
+    "sass-loader": "^7.0.3",
+    "style-loader": "^0.21.0",
     "webpack": "^4.8.3",
     "webpack-cli": "^2.1.4"
   }

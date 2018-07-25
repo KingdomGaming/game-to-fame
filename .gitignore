@@ -69,3 +69,4 @@ package-lock.json
 # build directories
 server/dist/
 public/js/
+public/css/
