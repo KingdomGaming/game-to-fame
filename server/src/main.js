@@ -22,3 +22,7 @@ new Router(app);
 server.listen(port, () => {
     console.log(`server listening on port ${port}`);
 });
+
+setInterval(() => {
+	io.emit("message", { message: "server message" })
+}, 1000);

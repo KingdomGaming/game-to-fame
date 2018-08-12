@@ -8,7 +8,7 @@
     "build:client": "webpack --config ./webpack.client.config.babel.js",
     "build:server": "webpack --config ./webpack.server.config.babel.js",
     "dev": "concurrently \"npm run build:client -- --watch\" \"npm run build:server -- --watch\"",
-    "serve": "node ./server/dist/app.bundle.js",
+    "serve": "npm run build && node ./server/dist/app.bundle.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
