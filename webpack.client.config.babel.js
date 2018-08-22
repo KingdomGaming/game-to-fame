@@ -2,14 +2,27 @@ import path from "path";
 import webpack from "webpack";
 import autoprefixer from "autoprefixer";
 import MiniCssExtractPlugin from "mini-css-extract-plugin";
+import CleanWebpackPlugin from "clean-webpack-plugin";
+import HtmlWebpackPlugin from "html-webpack-plugin";
 
 import { ENV, PLUGINS, FILENAMES } from "./webpack.shared.babel";
 import { PATHS } from "./shared/main";
 
 let clientPlugins = PLUGINS;
-clientPlugins.push(new MiniCssExtractPlugin({
-    filename: `../css/${FILENAMES.styles.output}.css`, // Seems unideal...
-}));
+clientPlugins.push(
+    new MiniCssExtractPlugin({
+        filename: `css/${FILENAMES.styles.output}.css`, // Seems unideal...
+    }),
+    new CleanWebpackPlugin([PATHS.publicRoot], {
+        "exclude" : ["assets"]
+    }), // FUTURE: exclude vendor js when generated
+    new HtmlWebpackPlugin({
+        template: `${PATHS.clientHtml}/index.html`,
+        filename: `${PATHS.publicRoot}/index.html`,
+        hash: true,
+        cache: false
+    })
+);
 
 
 
@@ -19,9 +32,9 @@ export default {
 	mode: ENV.isProduction ? "production" : "development",
     devtool: ENV.isProduction ? null : "source-map",
     output: {
-		path: PATHS.clientDist,
-        filename: `${FILENAMES.js.output}.bundle.js`,
-        publicPath: "/public/"
+		path: PATHS.publicRoot,
+        filename: `js/${FILENAMES.js.output}.bundle.js`,
+        publicPath: "/"
     },
     plugins: clientPlugins,
     module: {

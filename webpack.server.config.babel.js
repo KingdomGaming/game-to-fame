@@ -1,6 +1,7 @@
 import path from "path";
 import webpack from "webpack";
 import NodemonPlugin from "nodemon-webpack-plugin";
+import CleanWebpackPlugin from "clean-webpack-plugin";
 
 import { ENV, PLUGINS, FILENAMES } from "./webpack.shared.babel";
 import { PATHS } from "./shared/main";
@@ -14,6 +15,7 @@ if (!ENV.isProduction) {
     }));
 }
 
+serverPlugins.push(new CleanWebpackPlugin([PATHS.serverDist]));
 
 export default {
     entry: path.join(PATHS.serverSource, FILENAMES.js.entry),

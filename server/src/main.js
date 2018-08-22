@@ -5,7 +5,7 @@ import http from "http";
 import socketIo from "socket.io";
 
 import { PATHS } from "../../shared/main";
-import Router from "./router/Router";
+import Router from "./controllers/Router";
 
 // Setup
 const app = express();

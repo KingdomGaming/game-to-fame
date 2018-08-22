@@ -9,5 +9,6 @@ export const PATHS = {
     serverSource: path.resolve("server", "src"),
     serverDist: path.resolve("server", "dist"),
     clientSource: path.resolve("client", "js"),
-    clientDist: path.resolve("public", "js")
+    clientDist: path.resolve("public", "js"),
+    clientHtml: path.resolve("client", "html_templates")
 }
