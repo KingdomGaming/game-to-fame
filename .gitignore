@@ -70,3 +70,8 @@ package-lock.json
 server/dist/
 public/js/
 public/css/
+public/index.html
+
+# editor configs
+*.sublime-project
+*.sublime-workspace
