@@ -1,9 +1,11 @@
 import path from "path";
 import webpack from "webpack";
 import autoprefixer from "autoprefixer";
+
 import MiniCssExtractPlugin from "mini-css-extract-plugin";
 import CleanWebpackPlugin from "clean-webpack-plugin";
 import HtmlWebpackPlugin from "html-webpack-plugin";
+import ModernizrWebpackPlugin from "modernizr-webpack-plugin";
 
 import { ENV, PLUGINS, FILENAMES } from "./webpack.shared.babel";
 import { PATHS } from "./shared/main";
@@ -21,6 +23,11 @@ clientPlugins.push(
         filename: `${PATHS.publicRoot}/index.html`,
         hash: true,
         cache: false
+    }),
+    new ModernizrWebpackPlugin({
+        filename: `js/modernizr-bundle.js`,
+        minify: true,
+        "feature-detects": ["canvas"]
     })
 );
 
