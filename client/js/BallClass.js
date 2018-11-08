@@ -1,24 +1,4 @@
-function BallClass(radius)
-{
-	// x=15,//theGameCanvas.width/2,
-	// y=15,//theGameCanvas.height/2,
-
-
-
-	this.radius 	= radius; 		//15,
-	this.x 			= 45;			//theGameCanvas.width/2,
-	this.y 			= 45;			//theGameCanvas.height/2,
-	this.color		= "#4286f4";
-	// this.angle		= 0;
-	this.speed		= 1;
-	this.velX		= 0;
-	this.velY		= 0;
-	// this.elasticity	= 0.80;  // removed from game
-	this.lock_top = false;
-	this.lock_left = false;
-	this.lock_right = false;
-	this.lock_bottom = false;
-}
+import Ball from "../js/objects/player/Ball";
 
 
 
@@ -419,7 +399,7 @@ export const KG__CanvasApp = function()
 
 
 	//Creates our ball object.
-	var ball = new BallClass(15);
+	var ball = new Ball(15);
 
 
 
