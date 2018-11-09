@@ -7,7 +7,7 @@ import "../styles/main.sass";
 
 import "./vendor";
 
-import {KG__CanvasApp} from "./BallClass";
+import { KG__CanvasApp } from "./BallClass";
 
 
 
@@ -17,7 +17,9 @@ import {KG__CanvasApp} from "./BallClass";
 
 
 //Run the game
-KG__CanvasApp();
+document.addEventListener("DOMContentLoaded", () => {
+	KG__CanvasApp();
+});
 
 
 

@@ -1,14 +1,12 @@
-import Colors from "../../constants/colors";
+import colors from "../../constants/colors";
 
 export default class Ball {
-	// x=15,//theGameCanvas.width/2,
-    // y=15,//theGameCanvas.height/2,
     static get defaultProps() {
         return {
             radius: 15,
             x: 45,
             y: 45,
-            color: Colors.playerColor,
+            color: colors.player,
             speed: 1,
             velX: 0,
             velY: 0
@@ -24,6 +22,8 @@ export default class Ball {
         velX = Ball.defaultProps.velX,
         velY = Ball.defaultProps.velY,
     }) {
+        // x=15,//theGameCanvas.width/2,
+        // y=15,//theGameCanvas.height/2,
         this.radius 	= radius; 		//15,
         this.x 			= x;			//theGameCanvas.width/2,
         this.y 			= y;			//theGameCanvas.height/2,
@@ -39,5 +39,12 @@ export default class Ball {
         this.lock_bottom = false;
     }
 
-
+    //Draws the ball
+    render(context) {
+		context.fillStyle = this.color;
+		context.beginPath();
+		context.arc(this.x, this.y, this.radius, 0, Math.PI * 2, true);
+		context.closePath();
+		context.fill();
+    }
 }
