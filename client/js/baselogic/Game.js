@@ -22,10 +22,10 @@ export default class Game {
         this.scoreContext = this.theScoreCanvas.context;
 
         //Get the boundaries
-		this.bound_top = this.theGameCanvas.top;
-		this.bound_left = this.theGameCanvas.left;
-		this.bound_right = this.theGameCanvas.right;
-		this.bound_bottom = this.theGameCanvas.bottom;
+		this.bound_top = this.theGameCanvas.bounds.top;
+		this.bound_left = this.theGameCanvas.bounds.left;
+		this.bound_right = this.theGameCanvas.bounds.right;
+		this.bound_bottom = this.theGameCanvas.bounds.bottom;
 
         //Creates our ball object.
         this.ball = new Ball({});
@@ -70,12 +70,18 @@ export default class Game {
             const xPos = Math.floor(Math.random() * coin_max_x) + coin_min_x;
             const yPos = Math.floor(Math.random() * coin_max_y) + coin_min_y;
 
+            console.log(xPos, yPos);
+
+            const coin = new Coin({
+                x: xPos,
+                y: yPos
+            });
+
             this.coinMap.push(
-                new Coin({
-                    x: xPos,
-                    y: yPos
-                })
+                coin
             );
+
+            console.log(coin)
         }
     }
 
@@ -87,7 +93,6 @@ export default class Game {
         this.checkBoundary(this.ball, this.theGameCanvas);
 
         this.handleInput();
-        this.handleFriction();
 
         this.moveObjects();
 
@@ -101,12 +106,13 @@ export default class Game {
 
     render(gameContext, scoreContext) {
         this.clearScreen();
-        this.renderPlayer(gameContext);
         this.renderCoins(gameContext);
+        this.renderPlayer(gameContext);
         this.renderScore(scoreContext);
     }
 
     moveObjects() {
+        this.handleFriction();
         this.ball.move();
     }
 
@@ -219,10 +225,10 @@ export default class Game {
 	checkBoundary(object, theGameCanvas)
 	{
 		//Get the boundaries
-		var bound_top = this.bound_top;
-		var bound_left = this.bound_left;
-		var bound_right = this.bound_right;
-		var bound_bottom = this.bound_bottom;
+		const bound_top = this.bound_top;
+		const bound_left = this.bound_left;
+		const bound_right = this.bound_right;
+		const bound_bottom = this.bound_bottom;
 
 
 
