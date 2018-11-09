@@ -7,7 +7,7 @@ import "../styles/main.sass";
 
 import "./vendor";
 
-import { KG__CanvasApp } from "./BallClass";
+import Game from "./baselogic/Game";
 
 
 
@@ -18,18 +18,13 @@ import { KG__CanvasApp } from "./BallClass";
 
 //Run the game
 document.addEventListener("DOMContentLoaded", () => {
-	KG__CanvasApp();
+	const myGame = new Game();
+
+	if (!myGame.checkPreconditions()) {
+		console.error("Cannot run game. Failed checks.");
+
+		return;
+	}
+
+	myGame.run();
 });
-
-
-
-
-
-/*
-const socket = io();
-
-socket.on("message", (data) =>
-{
-	console.log(data.message);
-});
-*/

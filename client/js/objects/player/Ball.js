@@ -39,6 +39,12 @@ export default class Ball {
         this.lock_bottom = false;
     }
 
+    move() {
+        //X and Y components of the velocity vector are added to the ball x and y values.
+		this.x += this.velX;
+		this.y += this.velY;
+    }
+
     //Draws the ball
     render(context) {
 		context.fillStyle = this.color;

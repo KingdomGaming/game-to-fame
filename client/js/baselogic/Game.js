@@ -34,6 +34,21 @@ export default class Game {
         this.friction = 0.05;
 
         this.keyEventMap = {};
+        this.setupListeners();
+    }
+
+    setupListeners() {
+        window.addEventListener("keydown", this.addKeyToMap.bind(this));
+        window.addEventListener("keyup", this.removeKeyFromMap.bind(this));
+    }
+
+    addKeyToMap(event) {
+        console.log(this.keyEventMap)
+        this.keyEventMap[event.key] = true;
+    }
+
+    removeKeyFromMap(event) {
+        this.keyEventMap[event.key] = false;
     }
 
     generateCoins() {
@@ -63,15 +78,82 @@ export default class Game {
 
     run() {
         this.checkBoundary(this.ball, this.theGameCanvas);
+
+        this.handleInput();
+        this.handleFriction();
+
+        this.ball.move();
+
+        this.checkCoinCollision();
         this.generateCoins();
-        this.render(this.gameContext);
+
+        this.render(this.gameContext, this.scoreContext);
 
         setTimeout(this.run.bind(this), 1000 / this.fps);
     }
 
-    render(context) {
-        this.renderPlayer(context);
-        this.renderCoins(context);
+    render(gameContext, scoreContext) {
+        this.clearCanvas();
+        this.renderPlayer(gameContext);
+        this.renderCoins(gameContext);
+        this.renderScore(scoreContext);
+    }
+
+    handleInput() {
+        // Define key handling variables
+		const maxVel = 10;
+		const maxNegativeVel = maxVel * -1;
+		const addVel = 1;
+
+
+		//Check for activated keys
+		if(this.keyEventMap['w'] && !this.ball.lock_top)
+		{
+            this.ball.velY -= addVel;
+
+			if(this.ball.velY < maxNegativeVel) {
+                this.ball.velY = maxNegativeVel;
+            }
+		}
+
+
+
+		if(this.keyEventMap['a'] && !this.ball.lock_left)
+		{
+            this.ball.velX -= addVel;
+
+			if(this.ball.velX < maxNegativeVel) {
+                this.ball.velX = maxNegativeVel;
+            }
+		}
+
+
+
+		if(this.keyEventMap['d'] && !this.ball.lock_right)
+		{
+            this.ball.velX += addVel;
+
+			if(this.ball.velX > maxVel) {
+                this.ball.velX = maxVel;
+            }
+		}
+
+
+
+		if(this.keyEventMap['s'] && !this.ball.lock_bottom)
+		{
+            this.ball.velY += addVel;
+
+			if(this.ball.velY > maxVel) {
+                this.ball.velY = maxVel;
+            }
+		}
+    }
+
+    handleFriction() {
+        //Friction is proportionally substracted from the X component of the velocity vector.
+		this.ball.velY = this.ball.velY - (this.ball.velY * this.friction);
+		this.ball.velX = this.ball.velX - (this.ball.velX * this.friction);
     }
 
     clearCanvas() {
@@ -88,6 +170,59 @@ export default class Game {
 
     renderCoins(context) {
         this.coinMap.forEach((coin) => coin.render(context));
+    }
+
+    renderScore(context) {
+        const scoreToString = this.playerScore.toString();
+
+
+		if(this.playerScore >= 1000)
+		{
+			this.playerScoreString = scoreToString;
+		}
+		else if(this.playerScore >= 100)
+		{
+			this.playerScoreString = '0' + scoreToString;
+		}
+		else if(this.playerScore >= 10)
+		{
+			this.playerScoreString = '00' + scoreToString;
+		}
+		else
+		{
+			this.playerScoreString = '000' + scoreToString;
+		}
+
+
+		//Pain player score
+		context.font = "30px Arial";
+
+		let scoreColor;
+		if(this.playerScore >= 100)
+		{
+			scoreColor = '#ff7644';
+		}
+		else if(this.playerScore >= 50)
+		{
+			scoreColor = '#f9bc40';
+		}
+		else if(this.playerScore >= 25)
+		{
+			scoreColor = '#f9ef3f';
+		}
+		else if(this.playerScore >= 10)
+		{
+			scoreColor = '#89f93f';
+		}
+		else
+		{
+			scoreColor = '#3ff9a5';
+		}
+
+
+		context.fillStyle = scoreColor;
+
+		context.fillText(this.playerScoreString, 15, 35);
     }
 
     //Function in charge of checking the ball against walls.
@@ -172,7 +307,18 @@ export default class Game {
 		{
 			object.lock_bottom = false;
 		}
-	}
+    }
+
+    checkCoinCollision() {
+        this.coinMap.forEach((coin, index) => {
+            const isCollision = Math.sqrt(Math.pow((this.ball.x - coin.x), 2) + Math.pow((this.ball.y - coin.y), 2)) <= ((this.ball.radius + coin.radius) - ((coin.radius*2) - 2));
+
+            if (isCollision) {
+                this.playerScore ++;
+                this.coinMap.splice(index, 1);
+            }
+        });
+    }
 }
 
 const hasCanvasSupport = () => {

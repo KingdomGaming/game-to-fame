@@ -22,7 +22,7 @@ export default class Coin {
         this.y = y;
 
         this.color = color;
-        this.speed = color;
+        this.speed = speed;
     }
 
     render(context) {
