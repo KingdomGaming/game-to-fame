@@ -1,24 +1,31 @@
 import Ball from "../objects/player/Ball";
 import Coin from "../objects/collectible/Coin";
+
 import colors from "../constants/colors";
 import keys from "../constants/keys";
+
+import PrimaryCanvas from "../canvases/PrimaryCanvas";
+import ScoreCanvas from "../canvases/ScoreCanvas";
 
 export default class Game {
     constructor() {
         this.fps = 30;
 
         //Creates the canvas objects and gets their context.
-        this.theGameCanvas = document.querySelector("#theGameCanvas");
-        this.theScoreCanvas = document.querySelector("#theScoreCanvas");
-        this.gameContext = this.theGameCanvas.getContext("2d");
-        this.scoreContext = this.theScoreCanvas.getContext("2d");
+        this.canvases = [
+            this.theGameCanvas = new PrimaryCanvas("theGameCanvas"),
+            this.theScoreCanvas = new ScoreCanvas("theScoreCanvas")
+        ]
+
+        //this.theGameCanvas = new PrimaryCanvas("theGameCanvas");
+        this.gameContext = this.theGameCanvas.context;
+        this.scoreContext = this.theScoreCanvas.context;
 
         //Get the boundaries
-		const gameBox = this.theGameCanvas.getBoundingClientRect();
-		this.bound_top = parseInt(gameBox.top);
-		this.bound_left = parseInt(gameBox.left);
-		this.bound_right = parseInt(gameBox.right);
-		this.bound_bottom = parseInt(gameBox.bottom);
+		this.bound_top = this.theGameCanvas.top;
+		this.bound_left = this.theGameCanvas.left;
+		this.bound_right = this.theGameCanvas.right;
+		this.bound_bottom = this.theGameCanvas.bottom;
 
         //Creates our ball object.
         this.ball = new Ball({});
@@ -44,7 +51,6 @@ export default class Game {
     }
 
     addKeyToMap(event) {
-        console.log(this.keyEventMap)
         this.keyEventMap[event.key] = true;
     }
 
@@ -94,7 +100,7 @@ export default class Game {
     }
 
     render(gameContext, scoreContext) {
-        this.clearCanvas();
+        this.clearScreen();
         this.renderPlayer(gameContext);
         this.renderCoins(gameContext);
         this.renderScore(scoreContext);
@@ -161,12 +167,8 @@ export default class Game {
 		this.ball.velX = this.ball.velX - (this.ball.velX * this.friction);
     }
 
-    clearCanvas() {
-        //Clears the canvas on every call. make use of alpha to create trailing effect.
-		this.gameContext.fillStyle = "rgba(0, 0, 0, 0.75)";
-		this.scoreContext.fillStyle = "rgba(0, 0, 0, 1)";
-		this.gameContext.fillRect(0,0, this.theGameCanvas.width, this.theGameCanvas.height);
-		this.scoreContext.fillRect(0,0, this.theGameCanvas.width, this.theGameCanvas.height);
+    clearScreen() {
+        this.canvases.forEach((canvas) => canvas.clear());
     }
 
     renderPlayer(context) {
@@ -217,11 +219,10 @@ export default class Game {
 	checkBoundary(object, theGameCanvas)
 	{
 		//Get the boundaries
-		var box = theGameCanvas.getBoundingClientRect();
-		var bound_top = parseFloat(box.top);
-		var bound_left = parseFloat(box.left);
-		var bound_right = parseFloat(box.right);
-		var bound_bottom = parseFloat(box.bottom);
+		var bound_top = this.bound_top;
+		var bound_left = this.bound_left;
+		var bound_right = this.bound_right;
+		var bound_bottom = this.bound_bottom;
 
 
 
