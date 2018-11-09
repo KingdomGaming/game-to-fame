@@ -1,5 +1,7 @@
 import Ball from "../objects/player/Ball";
 import Coin from "../objects/collectible/Coin";
+import colors from "../constants/colors";
+import keys from "../constants/keys";
 
 export default class Game {
     constructor() {
@@ -28,7 +30,6 @@ export default class Game {
 
         //Init player's score
         this.playerScore = 0;
-        this.playerScoreString = '0000';
 
         //Sets our starting friction value - originally 0.01
         this.friction = 0.05;
@@ -82,7 +83,7 @@ export default class Game {
         this.handleInput();
         this.handleFriction();
 
-        this.ball.move();
+        this.moveObjects();
 
         this.checkCoinCollision();
         this.generateCoins();
@@ -99,6 +100,10 @@ export default class Game {
         this.renderScore(scoreContext);
     }
 
+    moveObjects() {
+        this.ball.move();
+    }
+
     handleInput() {
         // Define key handling variables
 		const maxVel = 10;
@@ -107,7 +112,7 @@ export default class Game {
 
 
 		//Check for activated keys
-		if(this.keyEventMap['w'] && !this.ball.lock_top)
+		if(this.keyEventMap[keys.w] && !this.ball.lock_top)
 		{
             this.ball.velY -= addVel;
 
@@ -118,7 +123,7 @@ export default class Game {
 
 
 
-		if(this.keyEventMap['a'] && !this.ball.lock_left)
+		if(this.keyEventMap[keys.a] && !this.ball.lock_left)
 		{
             this.ball.velX -= addVel;
 
@@ -129,7 +134,7 @@ export default class Game {
 
 
 
-		if(this.keyEventMap['d'] && !this.ball.lock_right)
+		if(this.keyEventMap[keys.d] && !this.ball.lock_right)
 		{
             this.ball.velX += addVel;
 
@@ -140,7 +145,7 @@ export default class Game {
 
 
 
-		if(this.keyEventMap['s'] && !this.ball.lock_bottom)
+		if(this.keyEventMap[keys.s] && !this.ball.lock_bottom)
 		{
             this.ball.velY += addVel;
 
@@ -173,56 +178,39 @@ export default class Game {
     }
 
     renderScore(context) {
-        const scoreToString = this.playerScore.toString();
+        const displayedScore = this.playerScore.toString().padStart(4, "0");
 
-
-		if(this.playerScore >= 1000)
-		{
-			this.playerScoreString = scoreToString;
-		}
-		else if(this.playerScore >= 100)
-		{
-			this.playerScoreString = '0' + scoreToString;
-		}
-		else if(this.playerScore >= 10)
-		{
-			this.playerScoreString = '00' + scoreToString;
-		}
-		else
-		{
-			this.playerScoreString = '000' + scoreToString;
-		}
-
-
-		//Pain player score
 		context.font = "30px Arial";
+		context.fillStyle = this.calculateScoreColor(this.playerScore);
 
-		let scoreColor;
-		if(this.playerScore >= 100)
+		context.fillText(displayedScore, 15, 35);
+    }
+
+    calculateScoreColor(score) {
+        let scoreColor;
+
+        if(score >= 100)
 		{
-			scoreColor = '#ff7644';
+			scoreColor = colors.score.tier5;
 		}
-		else if(this.playerScore >= 50)
+		else if(score >= 50)
 		{
-			scoreColor = '#f9bc40';
+			scoreColor = colors.score.tier4;
 		}
-		else if(this.playerScore >= 25)
+		else if(score >= 25)
 		{
-			scoreColor = '#f9ef3f';
+			scoreColor = colors.score.tier3;
 		}
-		else if(this.playerScore >= 10)
+		else if(score >= 10)
 		{
-			scoreColor = '#89f93f';
+			scoreColor = colors.score.tier2;
 		}
 		else
 		{
-			scoreColor = '#3ff9a5';
-		}
+			scoreColor = colors.score.tier1;
+        }
 
-
-		context.fillStyle = scoreColor;
-
-		context.fillText(this.playerScoreString, 15, 35);
+        return scoreColor;
     }
 
     //Function in charge of checking the ball against walls.
