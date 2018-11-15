@@ -24,14 +24,14 @@ export default class Ball {
         velY = Ball.defaultProps.velY,
         friction = Ball.defaultProps.friction
     }) {
-        this.radius 	= radius;
-        this.x 			= x;
-        this.y 			= y;
-        this.color		= color;
-        this.speed		= speed;
-        this.velX		= velX;
-        this.velY		= velY;
-        this.friction   = friction;
+        this.radius = radius;
+        this.x = x;
+        this.y = y;
+        this.color = color;
+        this.speed = speed;
+        this.velX = velX;
+        this.velY = velY;
+        this.friction = friction;
 
         this.lock_top = false;
         this.lock_left = false;
@@ -42,8 +42,8 @@ export default class Ball {
     move() {
         this.applyFriction();
 
-		this.x += this.velX;
-		this.y += this.velY;
+        this.x += this.velX;
+        this.y += this.velY;
     }
 
     applyFriction() {
@@ -51,12 +51,11 @@ export default class Ball {
         this.velX = this.velX - (this.velX * this.friction);
     }
 
-    //Draws the ball
     render(context) {
-		context.fillStyle = this.color;
-		context.beginPath();
+        context.fillStyle = this.color;
+        context.beginPath();
         context.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
-		context.closePath();
-		context.fill();
+        context.closePath();
+        context.fill();
     }
 }

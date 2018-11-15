@@ -11,34 +11,18 @@ export default class Game {
     constructor() {
         this.fps = 30;
 
-        //Creates the canvas objects and gets their context.
         this.views = [
-            this.theGameCanvas = new PrimaryCanvas("theGameCanvas"),
-            this.theScoreCanvas = new ScoreCanvas("theScoreCanvas")
+            this.gameView = new PrimaryCanvas("theGameCanvas"),
+            this.scoreView = new ScoreCanvas("theScoreCanvas")
         ]
 
-        this.gameContext = this.theGameCanvas.context;
-        this.scoreContext = this.theScoreCanvas.context;
-
-        //Get the boundaries
-        this.bound_top = this.theGameCanvas.bounds.top;
-        this.bound_left = this.theGameCanvas.bounds.left;
-        this.bound_right = this.theGameCanvas.bounds.right;
-        this.bound_bottom = this.theGameCanvas.bounds.bottom;
-
-        //Creates our ball object.
         this.player = new Ball({});
 
-        //Init coin collection
         this.coinMap = [];
         this.maxCoins = 75;
         this.generateCoins();
 
-        //Init player's score
         this.playerScore = 0;
-
-        //Sets our starting friction value - originally 0.01
-        this.friction = 0.05;
 
         this.keyMap = {};
         this.setupListeners();
@@ -58,14 +42,13 @@ export default class Game {
     }
 
     generateCoins() {
-        //Define coin values
-        const coin_min_x = 0 + (this.player.radius * 2);
-        const coin_max_x = this.bound_right - this.bound_left - (this.player.radius * 3);
-        const coin_min_y = 0 + (this.player.radius * 2);
-        const coin_max_y = this.bound_bottom - this.bound_top - (this.player.radius * 3);
-
         if(this.coinMap.length < this.maxCoins)
         {
+            const coin_min_x = 0 + (this.player.radius * 2);
+            const coin_max_x = this.gameView.bounds.right - this.gameView.bounds.left - (this.player.radius * 3);
+            const coin_min_y = 0 + (this.player.radius * 2);
+            const coin_max_y = this.gameView.bounds.bottom - this.gameView.bounds.top - (this.player.radius * 3);
+
             const xPos = Math.floor(Math.random() * coin_max_x) + coin_min_x;
             const yPos = Math.floor(Math.random() * coin_max_y) + coin_min_y;
 
@@ -84,17 +67,16 @@ export default class Game {
 
     run() {
         this.update();
-        this.render(this.gameContext, this.scoreContext);
+        this.render(this.gameView.context, this.scoreView.context);
 
         setTimeout(this.run.bind(this), 1000 / this.fps);
     }
 
     update() {
-        this.checkBoundary(this.player, this.theGameCanvas);
-
         this.handleInput();
 
         this.moveObjects();
+        this.checkBoundary(this.player, this.gameView.bounds);
 
         this.checkCoinCollision();
         this.generateCoins();
@@ -212,13 +194,13 @@ export default class Game {
     }
 
     //Function in charge of checking the ball against walls.
-    checkBoundary(object, theGameCanvas)
+    checkBoundary(object, bounds)
     {
         //Get the boundaries
-        const bound_top = this.bound_top;
-        const bound_left = this.bound_left;
-        const bound_right = this.bound_right;
-        const bound_bottom = this.bound_bottom;
+        const bound_top = bounds.top;
+        const bound_left = bounds.left;
+        const bound_right = bounds.right;
+        const bound_bottom = bounds.bottom;
 
 
 
@@ -292,6 +274,10 @@ export default class Game {
         {
             object.lock_bottom = false;
         }
+
+        // TODO: figure out why this doesn't control as smoothly.
+        // object.x = this.clamp(object.x, max_left, max_right);
+        // object.y = this.clamp(object.y, max_top, max_bottom);
     }
 
     checkCoinCollision() {
@@ -303,6 +289,11 @@ export default class Game {
                 this.coinMap.splice(index, 1);
             }
         });
+    }
+
+    // FUTURE: move out to utility somewhere.
+    clamp(value, min, max) {
+        return Math.min(Math.max(value, min), max);
     }
 }
 
