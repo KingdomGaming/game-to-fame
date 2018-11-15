@@ -9,7 +9,8 @@ export default class Ball {
             color: colors.player,
             speed: 1,
             velX: 0,
-            velY: 0
+            velY: 0,
+            friction: 0.05
         }
     }
 
@@ -21,18 +22,17 @@ export default class Ball {
         speed = Ball.defaultProps.speed,
         velX = Ball.defaultProps.velX,
         velY = Ball.defaultProps.velY,
+        friction = Ball.defaultProps.friction
     }) {
-        // x=15,//theGameCanvas.width/2,
-        // y=15,//theGameCanvas.height/2,
-        this.radius 	= radius; 		//15,
-        this.x 			= x;			//theGameCanvas.width/2,
-        this.y 			= y;			//theGameCanvas.height/2,
+        this.radius 	= radius;
+        this.x 			= x;
+        this.y 			= y;
         this.color		= color;
-        // this.angle		= 0;
         this.speed		= speed;
         this.velX		= velX;
         this.velY		= velY;
-        // this.elasticity	= 0.80;  // removed from game
+        this.friction   = friction;
+
         this.lock_top = false;
         this.lock_left = false;
         this.lock_right = false;
@@ -40,9 +40,15 @@ export default class Ball {
     }
 
     move() {
-        //X and Y components of the velocity vector are added to the ball x and y values.
+        this.applyFriction();
+
 		this.x += this.velX;
 		this.y += this.velY;
+    }
+
+    applyFriction() {
+        this.velY = this.velY - (this.velY * this.friction);
+        this.velX = this.velX - (this.velX * this.friction);
     }
 
     //Draws the ball
